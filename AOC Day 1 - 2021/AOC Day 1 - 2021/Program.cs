@@ -10,82 +10,50 @@ namespace AOC_Day_1___2021
         {
             Console.WriteLine(Day1Part1());
             Console.WriteLine(Day1Part2());
-
-
-            
         }
 
         public static int Day1Part1()
         {
             var input = System.IO.File.ReadAllLines(@"C:\AOC\Day1Input.txt");
-            var SonarReadings = new List<int>();
-            int i = -1;
-            int j = 0;
-            int count = 0;
+            var sonarReadings = new List<int>();
+            int increaseDetected = 0;
             foreach (string line in input)
             {
-                SonarReadings.Add(int.Parse(line));
-                if (j == 0)
+                sonarReadings.Add(int.Parse(line));
+                if (sonarReadings.Count > 1)
                 {
+                    if (sonarReadings.ElementAt(sonarReadings.Count - 2) < sonarReadings.ElementAt(sonarReadings.Count - 1))
+                    {
+                        increaseDetected++;
+                    }
                 }
-                else if (SonarReadings.ElementAt(i) < SonarReadings.ElementAt(j))
-                {
-                    count++;
-                }
-                i++;
-                j++;
             }
-            return count;
+            return increaseDetected;
         }
 
         public static int Day1Part2()
         {
             var input = System.IO.File.ReadAllLines(@"C:\AOC\Day1Input.txt");
-            var SonarReadings = new List<int>();
-            var GroupedResults = new List<int>();
-            int i = -1;
-            int j = 0;
-            int count = 0;
-            int timesrun = 0;
+            var sonarReadings = new List<int>();
+            var groupedResults = new List<int>();
+            int increaseDetected = 0;
             foreach (var item in input)
             {
-                SonarReadings.Add(int.Parse(item));
-            }
-            int a = 0;
-            int b = 1;
-            int c = 2;
-            for (int s = 0; s < SonarReadings.Count; s++)
-            {
-                timesrun++;
-                int result = SonarReadings.ElementAt(a) +
-                SonarReadings.ElementAt(b) +
-                SonarReadings.ElementAt(c);
-                GroupedResults.Add(result);
-                //Console.WriteLine($"{ SonarReadings.ElementAt(a)}, {SonarReadings.ElementAt(b)}, {SonarReadings.ElementAt(c)} and total is {result}");
-                a++;
-                b++;
-                c++;
-                s++;
-            }
-                foreach (var item in GroupedResults)
+                sonarReadings.Add(int.Parse(item));
+                if (sonarReadings.Count >= 3)
                 {
-                    if (j == 0)
+                    int result = sonarReadings.ElementAt(sonarReadings.Count - 3) + sonarReadings.ElementAt(sonarReadings.Count - 2) + sonarReadings.ElementAt(sonarReadings.Count - 1);
+                    groupedResults.Add(result);
+                    if (groupedResults.Count > 1)
                     {
+                        if (groupedResults.ElementAt(groupedResults.Count - 2) < groupedResults.ElementAt(groupedResults.Count - 1))
+                        {
+                            increaseDetected++;
+                        }
                     }
-                    else if (GroupedResults.ElementAt(i) < GroupedResults.ElementAt(j))
-                    {
-                        count++;
-                        //Console.WriteLine($"{GroupedResults.ElementAt(i)}");
-                        //Console.WriteLine($"{GroupedResults.ElementAt(j)} (Increase) {count}");
-                        //if(GroupedResults.ElementAt(i) == GroupedResults.ElementAt(j))
-                        //Console.WriteLine($"Equal Detected {GroupedResults.ElementAt(i)} is same as {GroupedResults.ElementAt(j)}");
-                    }
-                    i++;
-                    j++;
                 }
-            //Console.WriteLine(timesrun);
-            return count;
+            }
+            return increaseDetected;
         }
-       
     }
 }
