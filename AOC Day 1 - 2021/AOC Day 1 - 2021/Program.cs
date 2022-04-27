@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.IO;
 
 namespace AOC_Day_1___2021
 {
@@ -14,15 +15,17 @@ namespace AOC_Day_1___2021
 
         public static int Day1Part1()
         {
-            var input = System.IO.File.ReadAllLines(@"C:\AOC\Day1Input.txt");
-            var sonarReadings = new List<int>();
+            var input = File.ReadAllLines(@"C:\AOC\Day1Input.txt");
             int increaseDetected = 0;
+            int currentSonar = 0;
+            int lastSonar;
             foreach (string line in input)
             {
-                sonarReadings.Add(int.Parse(line));
-                if (sonarReadings.Count > 1)
+                lastSonar = currentSonar;
+                currentSonar = int.Parse(line);
+                if (lastSonar > 1)
                 {
-                    if (sonarReadings.ElementAt(sonarReadings.Count - 2) < sonarReadings.ElementAt(sonarReadings.Count - 1))
+                    if (currentSonar > lastSonar)
                     {
                         increaseDetected++;
                     }
