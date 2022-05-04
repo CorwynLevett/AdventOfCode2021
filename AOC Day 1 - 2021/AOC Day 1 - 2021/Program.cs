@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 
 namespace AOC_Day_1___2021
 {
@@ -9,8 +8,13 @@ namespace AOC_Day_1___2021
     {
         static void Main(string[] args)
         {
-            Console.WriteLine(Day1Part1());
-            Console.WriteLine(Day1Part2());
+            Console.WriteLine("***** Day 1 Answers *****");
+            Console.WriteLine("Part 1 is: " + Day1Part1());
+            Console.WriteLine("Part 2 is: " + Day1Part2());
+            Console.WriteLine();
+            Console.WriteLine("***** Day 2 Answers *****");
+            Console.WriteLine("Part 1 is: " + Day2Part1());
+            Console.WriteLine("Part 2 is: " + Day2Part2());
         }
 
         public static int Day1Part1()
@@ -48,6 +52,68 @@ namespace AOC_Day_1___2021
                 queue.Enqueue(addtionToWindow);
             }
             return increaseDetected;
+        }
+
+        public static int Day2Part1()
+        {
+            var input = File.ReadAllLines(@"C:\AOC\Day2Input.txt");
+            int horizonalPosition = 0;
+            int depthPosition = 0;
+            foreach (string i in input)
+            {
+                if (i.Contains("forward "))
+                {
+                    string[] x = i.Split(" ");
+                    int.TryParse(x[1], out int value);
+                    horizonalPosition += value;
+                }
+                if (i.Contains("down "))
+                {
+                    string[] x = i.Split(" ");
+                    int.TryParse(x[1], out int value);
+                    depthPosition += value;
+                }
+                if (i.Contains("up "))
+                {
+                    string[] x = i.Split(" ");
+                    int.TryParse(x[1], out int value);
+                    depthPosition -= value;
+                }
+            }
+            int answer = horizonalPosition * depthPosition;
+            return answer;
+        }
+
+        public static int Day2Part2()
+        {
+            var input = File.ReadAllLines(@"C:\AOC\Day2Input.txt");
+            int horizonalPosition = 0;
+            int depthPosition = 0;
+            int aim = 0;
+            foreach (string direction in input)
+            {
+                if (direction.Contains("forward "))
+                {
+                    string[] directionValue = direction.Split(" ");
+                    int.TryParse(directionValue[1], out int value);
+                    horizonalPosition += value;
+                    depthPosition = value * aim + depthPosition;
+                }
+                if (direction.Contains("down "))
+                {
+                    string[] directionValue = direction.Split(" ");
+                    int.TryParse(directionValue[1], out int value);
+                    aim += value;
+                }
+                if (direction.Contains("up "))
+                {
+                    string[] directionValue = direction.Split(" ");
+                    int.TryParse(directionValue[1], out int value);
+                    aim -= value;
+                }
+            }
+            int answer = horizonalPosition * depthPosition;
+            return answer;
         }
     }
 }
