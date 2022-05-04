@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.IO;
+using System.Linq;
 
 namespace AOC_Day_1___2021
 {
@@ -17,44 +17,35 @@ namespace AOC_Day_1___2021
         {
             var input = File.ReadAllLines(@"C:\AOC\Day1Input.txt");
             int increaseDetected = 0;
-            int currentSonar = 0;
-            int lastSonar;
-            foreach (string line in input)
+            int lastSonar = int.Parse(input[0]);
+            for (int i = 1; i < input.Length; i++)
             {
-                lastSonar = currentSonar;
-                currentSonar = int.Parse(line);
-                if (lastSonar > 1)
+                int currentSonar = int.Parse(input[i]);
+                if (currentSonar > lastSonar)
                 {
-                    if (currentSonar > lastSonar)
-                    {
-                        increaseDetected++;
-                    }
+                    increaseDetected++;
                 }
+                lastSonar = currentSonar;
             }
             return increaseDetected;
         }
-
         public static int Day1Part2()
         {
-            var input = System.IO.File.ReadAllLines(@"C:\AOC\Day1Input.txt");
-            var sonarReadings = new List<int>();
-            var groupedResults = new List<int>();
+            var input = File.ReadAllLines(@"C:\AOC\Day1Input.txt");
+            Queue<int> queue = new Queue<int>();
             int increaseDetected = 0;
-            foreach (var item in input)
+            queue.Enqueue(int.Parse(input[0]));
+            queue.Enqueue(int.Parse(input[1]));
+            queue.Enqueue(int.Parse(input[2]));
+            for (int i = 3; i < input.Length; i++)
             {
-                sonarReadings.Add(int.Parse(item));
-                if (sonarReadings.Count >= 3)
+                int addtionToWindow = int.Parse(input[i]);
+                int removalFromWindow = queue.Dequeue();
+                if (addtionToWindow > removalFromWindow)
                 {
-                    int result = sonarReadings.ElementAt(sonarReadings.Count - 3) + sonarReadings.ElementAt(sonarReadings.Count - 2) + sonarReadings.ElementAt(sonarReadings.Count - 1);
-                    groupedResults.Add(result);
-                    if (groupedResults.Count > 1)
-                    {
-                        if (groupedResults.ElementAt(groupedResults.Count - 2) < groupedResults.ElementAt(groupedResults.Count - 1))
-                        {
-                            increaseDetected++;
-                        }
-                    }
+                    increaseDetected++;
                 }
+                queue.Enqueue(addtionToWindow);
             }
             return increaseDetected;
         }
