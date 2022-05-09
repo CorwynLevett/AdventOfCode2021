@@ -8,7 +8,7 @@ namespace AOC___2021
 {
     public class HelpfulTools
     {
-        public static string TheMostCommonBinaryDigit(string[] input, int startPosition, int stopPosition)
+        public static string WhatsTheMostCommon(string[] input, int startPosition, int stopPosition)
         {
             int zeroCount = 0;
             int oneCount = 0;

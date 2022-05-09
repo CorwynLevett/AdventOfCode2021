@@ -129,13 +129,15 @@ namespace AOC___2021
             string commonBinaryReading = "";
             for (int i = 0; i < 12; i++)
             {
-                var digits = HelpfulTools.TheMostCommonBinaryDigit(input, i, 1);
+                var digits = HelpfulTools.WhatsTheMostCommon(input, i, 1);
                 commonBinaryReading += digits;
             }
             var gammaRate = Convert.ToInt32(commonBinaryReading, 2);
             string uncommonBinaryReading = HelpfulTools.InvertBinary(commonBinaryReading);
             decimal epsilonRate = Convert.ToInt32(uncommonBinaryReading, 2);
+
             decimal answer = gammaRate * epsilonRate;
+
             return answer;
         }
 
