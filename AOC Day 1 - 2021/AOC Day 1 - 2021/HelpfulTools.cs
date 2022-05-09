@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace AOC___2021
 {
-    public class CharChecker
+    public class HelpfulTools
     {
-        public static string WhatsTheMostCommon(string[] input, int startPosition, int stopPosition)
+        public static string TheMostCommonBinaryDigit(string[] input, int startPosition, int stopPosition)
         {
             int zeroCount = 0;
             int oneCount = 0;

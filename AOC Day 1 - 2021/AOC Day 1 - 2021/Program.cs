@@ -126,24 +126,14 @@ namespace AOC___2021
         public static decimal Day3_Part1()
         {
             var input = File.ReadAllLines(@"C:\AOC\Day3Input.txt");
-            var firstnumber = CharChecker.WhatsTheMostCommon(input, 0, 1);
-            var secondnumber = CharChecker.WhatsTheMostCommon(input, 1, 1);
-            var thirdnumber = CharChecker.WhatsTheMostCommon(input, 2, 1);
-            var fourthnumber = CharChecker.WhatsTheMostCommon(input, 3, 1);
-            var fifthnumber = CharChecker.WhatsTheMostCommon(input, 4, 1);
-            var sixthNumber = CharChecker.WhatsTheMostCommon(input, 5, 1);
-            var seventhNumber = CharChecker.WhatsTheMostCommon(input, 6, 1);
-            var eighthNumber = CharChecker.WhatsTheMostCommon(input, 7, 1);
-            var ninthNumber = CharChecker.WhatsTheMostCommon(input, 8, 1);
-            var tenthNumber = CharChecker.WhatsTheMostCommon(input, 9, 1);
-            var eleventhNumber = CharChecker.WhatsTheMostCommon(input, 10, 1);
-            var twelthNumber = CharChecker.WhatsTheMostCommon(input, 11, 1);
-
-            string commonBinaryReading = $"{firstnumber}{secondnumber}{thirdnumber}{fourthnumber}{fifthnumber}{sixthNumber}{seventhNumber}" +
-                $"{eighthNumber}{ninthNumber}{tenthNumber}{eleventhNumber}{twelthNumber}";
+            string commonBinaryReading = "";
+            for (int i = 0; i < 12; i++)
+            {
+                var digits = HelpfulTools.TheMostCommonBinaryDigit(input, i, 1);
+                commonBinaryReading += digits;
+            }
             var gammaRate = Convert.ToInt32(commonBinaryReading, 2);
-
-            string uncommonBinaryReading = CharChecker.InvertBinary(commonBinaryReading);
+            string uncommonBinaryReading = HelpfulTools.InvertBinary(commonBinaryReading);
             decimal epsilonRate = Convert.ToInt32(uncommonBinaryReading, 2);
 
             decimal answer = gammaRate * epsilonRate;
