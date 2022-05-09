@@ -135,9 +135,7 @@ namespace AOC___2021
             var gammaRate = Convert.ToInt32(commonBinaryReading, 2);
             string uncommonBinaryReading = HelpfulTools.InvertBinary(commonBinaryReading);
             decimal epsilonRate = Convert.ToInt32(uncommonBinaryReading, 2);
-
             decimal answer = gammaRate * epsilonRate;
-
             return answer;
         }
 
