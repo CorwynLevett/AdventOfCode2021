@@ -130,7 +130,7 @@ namespace AOC___2021
             string commonBinaryReading = "";
             for (int i = 0; i < 12; i++)
             {
-                var digits = HelpfulTools.TheMostCommon(input, i, 1);
+                var digits = HelpfulTools.TheMostCommon(input, i);
                 commonBinaryReading += digits;
             }
             var gammaRate = Convert.ToInt32(commonBinaryReading, 2);

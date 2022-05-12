@@ -5,14 +5,16 @@ namespace AOC___2021
 {
     public class HelpfulTools
     {
-        public static string TheMostCommon(string[] input, int startPosition, int stopPosition)
+        public static string TheMostCommon(string[] input, int y)
         {
             int zeroCount = 0;
             int oneCount = 0;
             string mostCommmonBit = "";
             for (int i = 0; i < input.Length; i++)
             {
-                _ = input[i].Substring(startPosition, stopPosition) == "0" ? zeroCount++ : oneCount++;
+                var span = input[i].AsSpan();
+                var value = span[y];
+                _ = value == '0' ? zeroCount++ : oneCount++;
                 _ = zeroCount > oneCount ? mostCommmonBit = "0" : mostCommmonBit = "1";
             }
             return mostCommmonBit;
@@ -24,7 +26,7 @@ namespace AOC___2021
             string invert = "";
             foreach (char digit in arr)
             {
-                _ = digit == '1' ? invert += "0" : invert += "1"; 
+                _ = digit == '1' ? invert += "0" : invert += "1";
             }
             return invert;
         }
