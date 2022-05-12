@@ -111,6 +111,7 @@ namespace AOC___2021
                     listOfOneNumbers.Add(input[i]);
                 }
             }
+
             if (oneCount < zeroCount)
             {
                 finalListToUse = listOfOneNumbers;
@@ -125,5 +126,24 @@ namespace AOC___2021
             }
             return finalListToUse;
         }
+
+        //public List<string> myCommonFunction(int oneCount, int zeroCount, List<string> listOfOneNumbers, List<string> listOfZeroNumbers)
+        //{
+        //    var finalListToUse = new List<string>();
+        //    if (oneCount < zeroCount)
+        //        {
+        //            finalListToUse = listOfOneNumbers;
+        //        }
+        //        else if (zeroCount < oneCount)
+        //        {
+        //            finalListToUse = listOfZeroNumbers;
+        //        }
+        //        else if (zeroCount == oneCount)
+        //        {
+        //            finalListToUse = listOfZeroNumbers;
+        //        }
+        //        return finalListToUse;
+        //    }
+        //}
     }
 }

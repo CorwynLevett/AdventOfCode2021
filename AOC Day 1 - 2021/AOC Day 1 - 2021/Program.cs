@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace AOC___2021
 {
@@ -141,14 +142,9 @@ namespace AOC___2021
 
         public static decimal Day3_Part2()
         {
-            var input = File.ReadAllLines(@"C:\AOC\Day3Input.txt");
-            var inputlist = new List<string>();
-            foreach (string item in input)
-            {
-                inputlist.Add(item);
-            }
-            var refinementOX = HelpfulTools.OxygenGenerator(inputlist, 0);
-            var refinementC02 = HelpfulTools.C02Scrubber(inputlist, 0);
+            var input = File.ReadAllLines(@"C:\AOC\Day3Input.txt").ToList();
+            var refinementOX = HelpfulTools.OxygenGenerator(input, 0);
+            var refinementC02 = HelpfulTools.C02Scrubber(input, 0);
             for (int i = 1; i < 12; i++)
             {
                 if (refinementOX.Count > 1)
