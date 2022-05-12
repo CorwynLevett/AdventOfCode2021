@@ -5,32 +5,16 @@ namespace AOC___2021
 {
     public class HelpfulTools
     {
-        public static string WhatsTheMostCommon(string[] input, int startPosition, int stopPosition)
+        public static string TheMostCommon(string[] input, int startPosition, int stopPosition)
         {
             int zeroCount = 0;
             int oneCount = 0;
             string mostCommmonBit = "";
             for (int i = 0; i < input.Length; i++)
             {
-
-                if (input[i].Substring(startPosition, stopPosition) == "0")
-                {
-                    zeroCount++;
-                }
-                else if (input[i].Substring(startPosition, stopPosition) == "1")
-                {
-                    oneCount++;
-                }
+                _ = input[i].Substring(startPosition, stopPosition) == "0" ? zeroCount++ : oneCount++;
+                _ = zeroCount > oneCount ? mostCommmonBit = "0" : mostCommmonBit = "1";
             }
-            if (zeroCount > oneCount)
-            {
-                mostCommmonBit = "0";
-            }
-            else
-            {
-                mostCommmonBit = "1";
-            }
-
             return mostCommmonBit;
         }
 
@@ -40,14 +24,7 @@ namespace AOC___2021
             string invert = "";
             foreach (char digit in arr)
             {
-                if (digit.Equals('1'))
-                {
-                    invert += "0";
-                }
-                else if (digit.Equals('0'))
-                {
-                    invert += "1";
-                }
+                _ = digit == '1' ? invert += "0" : invert += "1"; 
             }
             return invert;
         }
@@ -63,6 +40,7 @@ namespace AOC___2021
             {
                 var span = input[i].AsSpan();
                 var value = span[y];
+
                 if (value is '0')
                 {
                     zeroCount++;
@@ -126,24 +104,5 @@ namespace AOC___2021
             }
             return finalListToUse;
         }
-
-        //public List<string> myCommonFunction(int oneCount, int zeroCount, List<string> listOfOneNumbers, List<string> listOfZeroNumbers)
-        //{
-        //    var finalListToUse = new List<string>();
-        //    if (oneCount < zeroCount)
-        //        {
-        //            finalListToUse = listOfOneNumbers;
-        //        }
-        //        else if (zeroCount < oneCount)
-        //        {
-        //            finalListToUse = listOfZeroNumbers;
-        //        }
-        //        else if (zeroCount == oneCount)
-        //        {
-        //            finalListToUse = listOfZeroNumbers;
-        //        }
-        //        return finalListToUse;
-        //    }
-        //}
     }
 }
