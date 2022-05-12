@@ -74,13 +74,13 @@ namespace AOC___2021
                     int.TryParse(x[1], out int value);
                     horizonalPosition += value;
                 }
-                if (i.Contains("down "))
+                else if (i.Contains("down "))
                 {
                     string[] x = i.Split(" ");
                     int.TryParse(x[1], out int value);
                     depthPosition += value;
                 }
-                if (i.Contains("up "))
+                else if (i.Contains("up "))
                 {
                     string[] x = i.Split(" ");
                     int.TryParse(x[1], out int value);
@@ -106,13 +106,13 @@ namespace AOC___2021
                     horizonalPosition += value;
                     depthPosition = value * aim + depthPosition;
                 }
-                if (direction.Contains("down "))
+                else if (direction.Contains("down "))
                 {
                     string[] directionValue = direction.Split(" ");
                     int.TryParse(directionValue[1], out int value);
                     aim += value;
                 }
-                if (direction.Contains("up "))
+                else if (direction.Contains("up "))
                 {
                     string[] directionValue = direction.Split(" ");
                     int.TryParse(directionValue[1], out int value);
@@ -139,12 +139,30 @@ namespace AOC___2021
             return answer;
         }
 
-        public static int Day3_Part2()
+        public static decimal Day3_Part2()
         {
             var input = File.ReadAllLines(@"C:\AOC\Day3Input.txt");
-
-
-            int answer = 0;
+            var inputlist = new List<string>();
+            foreach (string item in input)
+            {
+                inputlist.Add(item);
+            }
+            var refinementOX = HelpfulTools.OxygenGenerator(inputlist, 0);
+            var refinementC02 = HelpfulTools.C02Scrubber(inputlist, 0);
+            for (int i = 1; i < 12; i++)
+            {
+                if (refinementOX.Count > 1)
+                {
+                    refinementOX = HelpfulTools.OxygenGenerator(refinementOX, i);
+                }
+                if (refinementC02.Count > 1)
+                {
+                    refinementC02 = HelpfulTools.C02Scrubber(refinementC02, i);
+                }
+            }
+            decimal oxygen = Convert.ToInt32(refinementOX[0], 2);
+            decimal c02 = Convert.ToInt32(refinementC02[0], 2);
+            decimal answer = oxygen * c02;
             return answer;
         }
     }

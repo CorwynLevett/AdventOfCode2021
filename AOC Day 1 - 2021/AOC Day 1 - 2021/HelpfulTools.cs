@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AOC___2021
 {
@@ -39,7 +36,7 @@ namespace AOC___2021
 
         public static string InvertBinary(string binary)
         {
-            char[] arr = binary.ToCharArray(); 
+            char[] arr = binary.ToCharArray();
             string invert = "";
             foreach (char digit in arr)
             {
@@ -53,6 +50,80 @@ namespace AOC___2021
                 }
             }
             return invert;
+        }
+
+        public static List<string> OxygenGenerator(List<string> input, int y)
+        {
+            int zeroCount = 0;
+            int oneCount = 0;
+            var listOfOneNumbers = new List<string>();
+            var listOfZeroNumbers = new List<string>();
+            var finalListToUse = new List<string>();
+            for (int i = 0; i < input.Count; i++)
+            {
+                var span = input[i].AsSpan();
+                var value = span[y];
+                if (value is '0')
+                {
+                    zeroCount++;
+                    listOfZeroNumbers.Add(input[i]);
+                }
+                else
+                {
+                    oneCount++;
+                    listOfOneNumbers.Add(input[i]);
+                }
+            }
+            if (oneCount > zeroCount)
+            {
+                finalListToUse = listOfOneNumbers;
+            }
+            else if (zeroCount > oneCount)
+            {
+                finalListToUse = listOfZeroNumbers;
+            }
+            else if (zeroCount == oneCount)
+            {
+                finalListToUse = listOfOneNumbers;
+            }
+            return finalListToUse;
+        }
+
+        public static List<string> C02Scrubber(List<string> input, int y)
+        {
+            int zeroCount = 0;
+            int oneCount = 0;
+            var listOfOneNumbers = new List<string>();
+            var listOfZeroNumbers = new List<string>();
+            var finalListToUse = new List<string>();
+            for (int i = 0; i < input.Count; i++)
+            {
+                var span = input[i].AsSpan();
+                var value = span[y];
+                if (value is '0')
+                {
+                    zeroCount++;
+                    listOfZeroNumbers.Add(input[i]);
+                }
+                else
+                {
+                    oneCount++;
+                    listOfOneNumbers.Add(input[i]);
+                }
+            }
+            if (oneCount < zeroCount)
+            {
+                finalListToUse = listOfOneNumbers;
+            }
+            else if (zeroCount < oneCount)
+            {
+                finalListToUse = listOfZeroNumbers;
+            }
+            else if (zeroCount == oneCount)
+            {
+                finalListToUse = listOfZeroNumbers;
+            }
+            return finalListToUse;
         }
     }
 }
