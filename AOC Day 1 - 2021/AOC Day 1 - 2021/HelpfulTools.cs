@@ -31,80 +31,52 @@ namespace AOC___2021
             return invert;
         }
 
-        public static List<string> OxygenGenerator(List<string> input, int y)
+        public static List<string> OxygenGenerator(List<string> input, int index)
         {
-            int zeroCount = 0;
-            int oneCount = 0;
             var listOfOneNumbers = new List<string>();
             var listOfZeroNumbers = new List<string>();
-            var finalListToUse = new List<string>();
             for (int i = 0; i < input.Count; i++)
             {
                 var span = input[i].AsSpan();
-                var value = span[y];
-
+                var value = span[index];
                 if (value is '0')
                 {
-                    zeroCount++;
                     listOfZeroNumbers.Add(input[i]);
                 }
                 else
                 {
-                    oneCount++;
                     listOfOneNumbers.Add(input[i]);
                 }
             }
-            if (oneCount > zeroCount)
+            if (listOfOneNumbers.Count == listOfZeroNumbers.Count)
             {
-                finalListToUse = listOfOneNumbers;
+                return listOfOneNumbers;
             }
-            else if (zeroCount > oneCount)
-            {
-                finalListToUse = listOfZeroNumbers;
-            }
-            else if (zeroCount == oneCount)
-            {
-                finalListToUse = listOfOneNumbers;
-            }
-            return finalListToUse;
+            return listOfOneNumbers.Count > listOfZeroNumbers.Count ? listOfOneNumbers : listOfZeroNumbers;
         }
 
-        public static List<string> C02Scrubber(List<string> input, int y)
+        public static List<string> C02Scrubber(List<string> input, int index)
         {
-            int zeroCount = 0;
-            int oneCount = 0;
             var listOfOneNumbers = new List<string>();
             var listOfZeroNumbers = new List<string>();
-            var finalListToUse = new List<string>();
             for (int i = 0; i < input.Count; i++)
             {
                 var span = input[i].AsSpan();
-                var value = span[y];
+                var value = span[index];
                 if (value is '0')
                 {
-                    zeroCount++;
                     listOfZeroNumbers.Add(input[i]);
                 }
                 else
                 {
-                    oneCount++;
                     listOfOneNumbers.Add(input[i]);
                 }
             }
-
-            if (oneCount < zeroCount)
+            if (listOfOneNumbers.Count == listOfZeroNumbers.Count)
             {
-                finalListToUse = listOfOneNumbers;
+                return listOfZeroNumbers;
             }
-            else if (zeroCount < oneCount)
-            {
-                finalListToUse = listOfZeroNumbers;
-            }
-            else if (zeroCount == oneCount)
-            {
-                finalListToUse = listOfZeroNumbers;
-            }
-            return finalListToUse;
+            return listOfOneNumbers.Count < listOfZeroNumbers.Count ? listOfOneNumbers : listOfZeroNumbers;
         }
     }
 }

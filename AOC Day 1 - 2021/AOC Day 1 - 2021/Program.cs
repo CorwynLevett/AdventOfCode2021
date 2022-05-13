@@ -18,8 +18,8 @@ namespace AOC___2021
             Console.WriteLine("Part 2 is: " + Day2Part2());
             Console.WriteLine();
             Console.WriteLine("***** Day 3 Answers *****");
-            Console.WriteLine("Part 1 is: " + Day3_Part1());
-            Console.WriteLine("Part 2 is: " + Day3_Part2());
+            Console.WriteLine("Part 1 is: " + Day3_Part1()); // should be 693486
+            Console.WriteLine("Part 2 is: " + Day3_Part2()); // should be 3379326
             Console.WriteLine();
 
         }
@@ -128,7 +128,7 @@ namespace AOC___2021
         {
             var input = File.ReadAllLines(@"C:\AOC\Day3Input.txt");
             string commonBinaryReading = "";
-            for (int i = 0; i < 12; i++)
+            for (int i = 0; i < input[i].Length; i++)
             {
                 var digits = HelpfulTools.TheMostCommon(input, i);
                 commonBinaryReading += digits;
@@ -145,7 +145,7 @@ namespace AOC___2021
             var input = File.ReadAllLines(@"C:\AOC\Day3Input.txt").ToList();
             var refinementOX = HelpfulTools.OxygenGenerator(input, 0);
             var refinementC02 = HelpfulTools.C02Scrubber(input, 0);
-            for (int i = 1; i < 12; i++)
+            for (int i = 1; i < input[1].Length; i++)
             {
                 if (refinementOX.Count > 1)
                 {
