@@ -6,4 +6,8 @@
     <RootNamespace>AOC___2021</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="SolrNet.Core" Version="1.1.1" />
+  </ItemGroup>
+
 </Project>

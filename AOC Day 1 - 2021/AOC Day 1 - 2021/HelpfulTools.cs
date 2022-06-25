@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace AOC___2021
 {
@@ -77,6 +78,23 @@ namespace AOC___2021
                 return listOfZeroNumbers;
             }
             return listOfOneNumbers.Count < listOfZeroNumbers.Count ? listOfOneNumbers : listOfZeroNumbers;
+        }
+
+        public static void Looper(int[][] arr, int ball, int iterations)
+        {
+            foreach (var card in arr)
+            {
+                int[] cardrow = arr[iterations];
+                if (cardrow.Select(num => num).Contains(ball)) //checking current card
+                {
+                    Console.WriteLine($"MATCH! card number {iterations} has ball {ball}"); //are you checking every card?
+                }
+                else
+                {
+                    Console.WriteLine($"card number {iterations} doesn't have ball {ball}");
+                }
+                iterations++;
+            }
         }
     }
 }
