@@ -83,7 +83,7 @@ namespace AOC___2021
 
 
 
-        public static Array cardBuilder(int[][] arr, int count)
+        public static Array CardBuilder(int[][] arr, int count)
         {
             arr = new int[5][];
             int y = 0;
@@ -98,7 +98,7 @@ namespace AOC___2021
                 }
                 else
                 {
-                    arr[y++] = lineToAdd; //overriteen every time you you assign!!!!
+                    arr[y++] = lineToAdd;
                 }
             }
             return arr;
@@ -106,7 +106,7 @@ namespace AOC___2021
 
         public static int CheckForWinner(List<Tuple<int, int, int>> winnerslist)
         {
-            int cardIndex = 0; //do you need this?
+            int cardIndex = 0; 
             int rowIndex = 0;
             int colIndex = 0;
 

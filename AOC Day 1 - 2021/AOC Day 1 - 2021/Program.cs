@@ -171,31 +171,34 @@ namespace AOC___2021
 
         public static int Day4_Part1()
         {
-            int answer = 0;
-            var result = 0;
+            var firstWinningCard = 0;
             var bingoBalls = new List<int>();
+            int[][] board = new int[5][]; //jagged array not 2D
+            var allBingoCards = new List<Array>();
+            int cardID = 0;
+            int numberOfBallsCalled = 0;
+            int lastBallCalled = 0;
+
             foreach (var ball in File.ReadLines(@"C:\AOC\Day4Input.txt").First().Split(","))
             {
                 int ballToParse = int.Parse(ball);
                 bingoBalls.Add(ballToParse);
             }
-            int[][] board = new int[5][]; //jagged array not 2D
-            var allBingoCards = new List<Array>();
-            for (int i = 2; i < 601; i += 6)
+
+            for (int i = 2; i < File.ReadLines(@"C:\AOC\Day4Input.txt").Count(); i += 6)
             {
-                allBingoCards.Add(HelpfulTools.cardBuilder(board, i));
+                allBingoCards.Add(HelpfulTools.CardBuilder(board, i));
             }
-            var winnerslist = new List<Tuple<int, int, int>>(); //win list to find all cards who've matched a number
-            int counter = 0;
-            int ballsCalled = 0;
-            int previousBall = 0;
+
+            var winnerslist = new List<Tuple<int, int, int>>(); //any cards who've matched a number
+
             foreach (var ball in bingoBalls) //loop every ball
             {
-                if (ballsCalled >= 5)
+                if (numberOfBallsCalled >= 5)
                 {
                     //check for a winner 
-                    result = HelpfulTools.CheckForWinner(winnerslist);
-                    if (result != -1)
+                    firstWinningCard = HelpfulTools.CheckForWinner(winnerslist);
+                    if (firstWinningCard != -1)
                     { 
                        break; 
                     }
@@ -209,37 +212,38 @@ namespace AOC___2021
                         {
                             if (ball == bingoCard[row][col])
                             {
-                                bingoCard[row][col] = -1;
-                                var recordWin = new Tuple<int, int, int>(counter, row, col);
+                                bingoCard[row][col] = -1; // cross off a number 
+                                var recordWin = new Tuple<int, int, int>(cardID, row, col);
                                 winnerslist.Add(recordWin);
                                 break;
                             }
                         }
                     }
-                    counter++;
+                    cardID++; //process next card 
                 }
-                counter = 0;
-                ballsCalled++;
-                previousBall = ball;
+                cardID = 0; //reset cardsId 
+                numberOfBallsCalled++;
+                lastBallCalled = ball;
             }
 
-            var card = allBingoCards[result];
-            var x = 0;
-            foreach (int[] row in card)
+            var winningCard = allBingoCards[firstWinningCard];
+            var unmarkedNumbers = 0;
+            //find all unmarked numbers and sum them
+            foreach (int[] row in winningCard)
             {
-                for (int col = 0; col < card.Length; col++)
+                for (int col = 0; col < winningCard.Length; col++)
                 {
                     if (row[col] != -1)
                     {
-                        x += row[col];
+                        unmarkedNumbers += row[col];
                     }
                 }
-
             }
-            answer = x * previousBall;
-
+            int answer = unmarkedNumbers * lastBallCalled;
             return answer;
         }
+
+
 
         public static int Day4_Part2()
 
