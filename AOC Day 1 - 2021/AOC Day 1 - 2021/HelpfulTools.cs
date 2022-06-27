@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 namespace AOC___2021
@@ -80,21 +81,64 @@ namespace AOC___2021
             return listOfOneNumbers.Count < listOfZeroNumbers.Count ? listOfOneNumbers : listOfZeroNumbers;
         }
 
-        public static void Looper(int[][] arr, int ball, int iterations)
+
+
+        public static Array cardBuilder(int[][] arr, int count)
         {
-            foreach (var card in arr)
+            arr = new int[5][];
+            int y = 0;
+            foreach (var line in File.ReadLines(@"C:\AOC\Day4Input.txt").Skip(count))
             {
-                int[] cardrow = arr[iterations];
-                if (cardrow.Select(num => num).Contains(ball)) //checking current card
+                int[] lineToAdd = line
+                .Split(" ", StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
+                .Select(Int32.Parse).ToArray();
+                if (line == "")
                 {
-                    Console.WriteLine($"MATCH! card number {iterations} has ball {ball}"); //are you checking every card?
+                    break;
                 }
                 else
                 {
-                    Console.WriteLine($"card number {iterations} doesn't have ball {ball}");
+                    arr[y++] = lineToAdd; //overriteen every time you you assign!!!!
                 }
-                iterations++;
             }
+            return arr;
+        }
+
+        public static int CheckForWinner(List<Tuple<int, int, int>> winnerslist)
+        {
+            int cardIndex = 0; //do you need this?
+            int rowIndex = 0;
+            int colIndex = 0;
+
+            var CardAndRowWins = winnerslist.OrderBy(t => t).ToList();
+            foreach (var card in CardAndRowWins)
+            {
+                for (int i = 0; i < 4; i++)
+                {
+                    if (card.Item1 != cardIndex)
+                    {
+                        cardIndex = card.Item1;
+                    }
+                    if (card.Item2 != rowIndex)
+                    {
+                        rowIndex++;
+                    }
+                    if (card.Item3 != colIndex)
+                    {
+                        colIndex++;
+                    }
+                }
+                int numWinsOnCard = CardAndRowWins.Count(where => where.Item1 == cardIndex);
+                int numWinsOnRow = CardAndRowWins.Count(where => where.Item1 == cardIndex && where.Item2 == rowIndex);
+                if (numWinsOnCard > 5 && numWinsOnRow == 5) //not sure this is fully reliable 
+                {
+                    return cardIndex;
+                }
+                cardIndex = 0;
+                colIndex = 0;
+                rowIndex = 0;
+            }
+            return -1;
         }
     }
 }

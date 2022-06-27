@@ -7,6 +7,8 @@ namespace AOC___2021
 {
     public static class Program
     {
+        private static IEnumerable<(int, int)> newlist;
+
         static void Main(string[] args)
         {
             Console.WriteLine("***** Day 1 Answers *****");
@@ -22,7 +24,7 @@ namespace AOC___2021
             Console.WriteLine("Part 2 is: " + Day3_Part2()); // should be 3379326
             Console.WriteLine();
             Console.WriteLine("***** Day 4 Answers *****");
-            Console.WriteLine("Part 1 is: " + Day4_Part1());
+            Console.WriteLine("Part 1 is: " + Day4_Part1()); //should be 2496
             Console.WriteLine("Part 2 is: " + Day4_Part2());
 
 
@@ -169,59 +171,73 @@ namespace AOC___2021
 
         public static int Day4_Part1()
         {
+            int answer = 0;
+            var result = 0;
             var bingoBalls = new List<int>();
-            int i = 0;
             foreach (var ball in File.ReadLines(@"C:\AOC\Day4Input.txt").First().Split(","))
             {
                 int ballToParse = int.Parse(ball);
                 bingoBalls.Add(ballToParse);
             }
-            int[][] BingoCard = new int[5][]; //jagged array not 2D
-            int y = 0;
+            int[][] board = new int[5][]; //jagged array not 2D
             var allBingoCards = new List<Array>();
-            foreach (var line in File.ReadLines(@"C:\AOC\Day4Input.txt").Skip(2))
+            for (int i = 2; i < 601; i += 6)
             {
-                int[] lineToAdd = line
-                .Split(" ", StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
-                .Select(Int32.Parse).ToArray();
-                if (line == "")
+                allBingoCards.Add(HelpfulTools.cardBuilder(board, i));
+            }
+            var winnerslist = new List<Tuple<int, int, int>>(); //win list to find all cards who've matched a number
+            int counter = 0;
+            int ballsCalled = 0;
+            int previousBall = 0;
+            foreach (var ball in bingoBalls) //loop every ball
+            {
+                if (ballsCalled >= 5)
                 {
-                    allBingoCards.Add(BingoCard);
-                    line.Skip(1);
-                    y = 0;
-                    i++;
+                    //check for a winner 
+                    result = HelpfulTools.CheckForWinner(winnerslist);
+                    if (result != -1)
+                    { 
+                       break; 
+                    }
                 }
-                else
+
+                foreach (int[][] bingoCard in allBingoCards) //loop every card 
                 {
-                    BingoCard[y++] = lineToAdd;
+                    for (int row = 0; row < bingoCard.Length; row++) //compare first ball to first row 
+                    {
+                        for (int col = 0; col < bingoCard.Length; col++) //in the first column
+                        {
+                            if (ball == bingoCard[row][col])
+                            {
+                                bingoCard[row][col] = -1;
+                                var recordWin = new Tuple<int, int, int>(counter, row, col);
+                                winnerslist.Add(recordWin);
+                                break;
+                            }
+                        }
+                    }
+                    counter++;
+                }
+                counter = 0;
+                ballsCalled++;
+                previousBall = ball;
+            }
+
+            var card = allBingoCards[result];
+            var x = 0;
+            foreach (int[] row in card)
+            {
+                for (int col = 0; col < card.Length; col++)
+                {
+                    if (row[col] != -1)
+                    {
+                        x += row[col];
+                    }
                 }
 
             }
-            i = 0;
-            var winnerslist = new List<int>();
-            foreach (var ball in bingoBalls)
-            {
+            answer = x * previousBall;
 
-                HelpfulTools.Looper((int[][])allBingoCards[i], ball, i);
-               // foreach (KeyValuePair<int, Array> entry in allBingoCards)
-                //int[][] card = (int[][])allBingoCards[i];
-                //if (card.SelectMany(num => num).Contains(ball)) //checking current card
-                //{
-                    
-                //    if (key.SelectMany(num => num).Contains(ball)) //checking current card
-                //    {
-                //        Console.WriteLine($"MATCH! card number {i} has ball {ball}"); //are you checking every card?
-                //        winnerslist.Add(i);
-                //    }
-                //    else
-                //    {
-                //        Console.WriteLine($"card number {i} doesn't have ball {ball}");
-                //    }
-                //}
-                //i++;
-            }
-
-            int answer = 0;
             return answer;
         }
 
