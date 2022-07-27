@@ -83,9 +83,9 @@ namespace AOC___2021
 
 
 
-        public static Array CardBuilder(int[][] arr, int count)
+        public static BingoBoard CardBuilder(int count, int cardId)
         {
-            arr = new int[5][];
+            var arr = new int[5][];
             int y = 0;
             foreach (var line in File.ReadLines(@"C:\AOC\Day4Input.txt").Skip(count))
             {
@@ -101,36 +101,41 @@ namespace AOC___2021
                     arr[y++] = lineToAdd;
                 }
             }
-            return arr;
+            return new BingoBoard(arr, cardId);
         }
 
-        public static int CheckForWinner(List<Tuple<int, int, int>> winnerslist)
+        public static int CheckForWinner(List<BingoCardModel> winnerslist)
         {
             int cardIndex = 0; 
             int rowIndex = 0;
             int colIndex = 0;
 
-            var CardAndRowWins = winnerslist.OrderBy(t => t).ToList();
+            var CardAndRowWins = winnerslist.OrderBy(x => x.CardId).ToList();
             foreach (var card in CardAndRowWins)
             {
                 for (int i = 0; i < 4; i++)
                 {
-                    if (card.Item1 != cardIndex)
+                    if (card.CardId != cardIndex)
                     {
-                        cardIndex = card.Item1;
+                        cardIndex = card.CardId;
                     }
-                    if (card.Item2 != rowIndex)
+                    if (card.Row != rowIndex)
                     {
                         rowIndex++;
                     }
-                    if (card.Item3 != colIndex)
+                    if (card.Column != colIndex)
                     {
                         colIndex++;
                     }
                 }
-                int numWinsOnCard = CardAndRowWins.Count(where => where.Item1 == cardIndex);
-                int numWinsOnRow = CardAndRowWins.Count(where => where.Item1 == cardIndex && where.Item2 == rowIndex);
+                int numWinsOnCard = CardAndRowWins.Count(where => where.CardId == cardIndex);
+                int numWinsOnRow = CardAndRowWins.Count(where => where.CardId == cardIndex && where.Row == rowIndex);
+                int numWinsOnCol = CardAndRowWins.Count(where => where.CardId == cardIndex && where.Column == colIndex);
                 if (numWinsOnCard > 5 && numWinsOnRow == 5) //not sure this is fully reliable 
+                {
+                    return cardIndex;
+                }
+                else if (numWinsOnCard > 5 && numWinsOnCol == 5)
                 {
                     return cardIndex;
                 }
@@ -140,5 +145,56 @@ namespace AOC___2021
             }
             return -1;
         }
+
+        public static List<int> CheckForWinnerALL(List<BingoCardModel> winnerslist)
+        {
+            int cardIndex = 0;
+            int rowIndex = 0;
+            int colIndex = 0;
+
+            List<int> values = new List<int>();
+
+            var CardAndRowWins = winnerslist.OrderBy(x => x.CardId).ToList();
+            foreach (var card in CardAndRowWins)
+            {
+                for (int i = 0; i < 4; i++)
+                {
+                    if (card.CardId != cardIndex)
+                    {
+                        cardIndex = card.CardId;
+                    }
+                    if (card.Row != rowIndex)
+                    {
+                        rowIndex++;
+                    }
+                    if (card.Column != colIndex)
+                    {
+                        colIndex++;
+                    }
+                }
+                int numWinsOnCard = CardAndRowWins.Count(where => where.CardId == cardIndex);
+                int numWinsOnRow = CardAndRowWins.Count(where => where.CardId == cardIndex && where.Row == rowIndex);
+                int numWinsOnCol = CardAndRowWins.Count(where => where.CardId == cardIndex && where.Column == colIndex);
+                if (numWinsOnCard > 5 && numWinsOnRow == 5) //not sure this is fully reliable 
+                {
+                    if (!values.Any(x => x.Equals(cardIndex)))
+                    {
+                        values.Add(cardIndex);
+                    }
+                }
+                else if (numWinsOnCard > 5 && numWinsOnCol == 5)
+                {
+                    if (!values.Any(x => x.Equals(cardIndex)))
+                    {
+                        values.Add(cardIndex);
+                    }
+                }
+                cardIndex = 0;
+                colIndex = 0;
+                rowIndex = 0;
+            }
+            return values;
+        }
+
     }
 }
