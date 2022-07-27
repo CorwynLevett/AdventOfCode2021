@@ -29,7 +29,7 @@ namespace AOC___2021
         public static int Day1Part2()
         {
             var input = File.ReadAllLines(@"C:\AOC\Day1Input.txt");
-            Queue<int> queue = new Queue<int>();
+            Queue<int> queue = new();
             int increaseDetected = 0;
             queue.Enqueue(int.Parse(input[0]));
             queue.Enqueue(int.Parse(input[1]));
@@ -57,19 +57,19 @@ namespace AOC___2021
                 if (i.Contains("forward "))
                 {
                     string[] x = i.Split(" ");
-                    int.TryParse(x[1], out int value);
+                    _ = int.TryParse(x[1], out int value);
                     horizonalPosition += value;
                 }
                 else if (i.Contains("down "))
                 {
                     string[] x = i.Split(" ");
-                    int.TryParse(x[1], out int value);
+                    _ = int.TryParse(x[1], out int value);
                     depthPosition += value;
                 }
                 else if (i.Contains("up "))
                 {
                     string[] x = i.Split(" ");
-                    int.TryParse(x[1], out int value);
+                    _ = int.TryParse(x[1], out int value);
                     depthPosition -= value;
                 }
             }
@@ -88,20 +88,20 @@ namespace AOC___2021
                 if (direction.Contains("forward "))
                 {
                     string[] directionValue = direction.Split(" ");
-                    int.TryParse(directionValue[1], out int value);
+                    _ = int.TryParse(directionValue[1], out int value);
                     horizonalPosition += value;
                     depthPosition = value * aim + depthPosition;
                 }
                 else if (direction.Contains("down "))
                 {
                     string[] directionValue = direction.Split(" ");
-                    int.TryParse(directionValue[1], out int value);
+                    _ = int.TryParse(directionValue[1], out int value);
                     aim += value;
                 }
                 else if (direction.Contains("up "))
                 {
                     string[] directionValue = direction.Split(" ");
-                    int.TryParse(directionValue[1], out int value);
+                    _ = int.TryParse(directionValue[1], out int value);
                     aim -= value;
                 }
             }
@@ -231,7 +231,7 @@ namespace AOC___2021
             int lastBallCalled = 0;
             var cardsWhichWon = new List<int>();
             int losingCardFinally = 0;
-            List<int> recordOfWinners = new List<int>();
+            List<int> recordOfWinners = new();
             var ordered = new List<int>();
             bool ballFoundOnCard = false;
             bool clearedWinners = false;
@@ -255,14 +255,13 @@ namespace AOC___2021
             {
                     if (clearedWinners == true)
                     {
-                        winnerslist.RemoveAll(x => recordOfWinners.Any(recordOfWinners => x.CardId == recordOfWinners));
                         losingCardFinally = HelpfulTools.CheckForWinner(winnerslist);
                         if (losingCardFinally != -1)
                         {
                             break;
                         }
                     }
-                    //check for all winner 
+                    //check for all winners and list them, then using that list remove all the cardid in the winnerlist
                     cardsWhichWon = HelpfulTools.CheckForWinnerALL(winnerslist);
                     if (cardsWhichWon.Count != 0)
                     {
@@ -272,7 +271,6 @@ namespace AOC___2021
                                 if (!recordOfWinners.Any(x => x == card))
                                 {
                                     recordOfWinners.Add(card);
-                                    recordOfWinners.Sort();
                                 }
                                 if (recordOfWinners.Count == 99 && clearedWinners == false) 
                                 {
